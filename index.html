@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SERTCMFWNJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-SERTCMFWNJ');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fact Sharing Site</title>
+    <style>
+        .slide-in {
+            animation: slide-in 0.4s ease-in-out;
+        }
+
+        .slide-out {
+            animation: slide-out 0.4s ease-in-out;
+        }
+
+        @keyframes slide-in {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-out {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        #search-bar {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #search-input {
+            width: 80%;
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #search-btn {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #search-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #post-container {
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        #post-text {
+            width: 100%;
+            height: calc(100% - 20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            text-align: left;
+            font-size: 18px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        #fact-id {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        #add-post-form {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            width: 200px;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #post-input {
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            resize: none;
+        }
+
+        #submit-post-btn {
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #add-post-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        #add-post-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            #post-container {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+
+            #add-post-form {
+                width: 80%;
+                bottom: 80px;
+                right: 10%;
+            }
+        }
+    </style>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
+
+<div id="search-bar">
+    <input type="text" id="search-input" placeholder="Search by FactID...">
+    <button id="search-btn">Search</button>
+</div>
+
+<div class="post-container" id="post-container">
+    <div class="post" id="post-text">
+    </div>
+    <div id="fact-id">
+    </div>
+</div>
+
+<div id="add-post-form">
+    <textarea id="post-input" placeholder="Enter a new Fact..." rows="3"></textarea>
+    <button type="button" id="submit-post-btn">Add Fact</button>
+</div>
+
+<button id="add-post-btn">+</button>
+
+<div id="notification"></div>
+<script src="main.js"></script>
+</body>
+</html>
