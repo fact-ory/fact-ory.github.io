@@ -12,7 +12,8 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fact-ory</title>
+    <title>Fact-Ory</title>
+    <link rel="icon" href="logo.png" type="image/png">
     <style>
         .slide-in {
             animation: slide-in 0.4s ease-in-out;
@@ -60,11 +61,21 @@
             max-width: 600px;
             display: flex;
             justify-content: center;
+            align-items: center;
             margin-top: 20px;
         }
 
+        #logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-image: url('logo.png');
+            background-size: cover;
+        }
+
         #search-input {
-            width: 80%;
+            width: 70%;
             padding: 8px;
             font-size: 16px;
             border-radius: 5px;
@@ -198,6 +209,21 @@
                 bottom: 80px;
                 right: 10%;
             }
+
+            #logo {
+                width: 30px;
+                height: 30px;
+            }
+
+            #search-input {
+                width: 65%;
+                padding: 6px;
+            }
+
+            #search-btn {
+                padding: 6px;
+                font-size: 14px;
+            }
         }
     </style>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -206,6 +232,7 @@
 <body>
 
 <div id="search-bar">
+    <div id="logo"></div>
     <input type="text" id="search-input" placeholder="Search by FactID...">
     <button id="search-btn">Search</button>
 </div>
