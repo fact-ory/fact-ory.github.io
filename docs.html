@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logo ve Test Mesajı</title>
+    <title>Docs - Fact-Ory</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             height: 100vh;
-            padding: 20px;
             font-family: Arial, sans-serif;
         }
         .container {
             text-align: left;
+            padding: 20px;
         }
         img {
             max-width: 100px;
@@ -27,12 +28,36 @@
             font-size: 18px;
             color: #333;
         }
+        footer {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="logo.png" alt="Logo">
-        <div class="message">ÖZEL MESAJLAR: Özel mesajlar, sitenin ilk Fact'ında ve search bar'da 3 saat boyunca görünerek mesajınızı tüm dünyaya yaymanızı sağlar. Bunu yaparak mesajınızı tüm dünyaya iletebilirsiniz. Daha fazla bilgi için: tachion.software@gmail.com üzerinden bizimle iletişime geçin.</div>
+        <div class="message">
+            Özel Mesajlar: Özel mesajlar, sitenin ilk Fact'ında ve search bar'da 3 saat boyunca görünerek mesajınızı tüm dünyaya yaymanızı sağlar. Bunu yaparak sevdiklerinize özel mesajlar verip, özel bir anı yaratabilirsiniz.  Daha fazla bilgi için: tachion.software@gmail.com üzerinden bizimle iletişime geçin.
+            <br><br>
+            Bağış: Sitede bazı ayrıcalıklı işlemler yapabilmek ve geliştirme sürecine katkı sağlamak için buymeacoffee.com/myusuf üzerinden bize destek olabilirsiniz.
+            <br><br>
+            Commit Log:
+            <ul>
+                <li>Initial Commit - FactsApp v1</li>
+                <li>FactsApp v2</li>
+                <li>added logo - FactsApp v3</li>
+                <li>HB1 - special message</li>
+                <li>Created DOCS</li>
+            </ul>
+        </div>
     </div>
+    
+    <footer>
+        Fact-Ory, 2024 Tachion Inc ©
+    </footer>
 </body>
 </html>
