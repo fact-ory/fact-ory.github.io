@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fact-Ory</title>
     <link rel="icon" href="logo.png" type="image/png">
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SERTCMFWNJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-SERTCMFWNJ');
+    </script>
     <style>
-        /* CSS Variables for Light and Dark Mode */
+        /* CSS Variables for Light and Dark Themes */
         :root {
             --bg-color: #f0f0f0;
             --text-color: #333;
@@ -23,7 +34,6 @@
             --shadow-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* General Styles */
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
@@ -54,8 +64,6 @@
             margin: 70px auto 20px auto;
             display: flex;
             gap: 10px;
-            justify-content: center;
-            align-items: center;
         }
 
         #search-input {
@@ -73,32 +81,22 @@
             border-radius: 5px;
             background-color: var(--accent-color);
             color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #search-btn:hover {
-            background-color: darken(var(--accent-color), 10%);
         }
 
         .post-container {
             width: 90%;
-            max-width: 400px;
+            max-width: 600px;
             background-color: var(--card-bg);
             margin: 20px 0;
             border-radius: 10px;
             box-shadow: 0 4px 8px var(--shadow-color);
             padding: 20px;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .post-container:hover {
-            box-shadow: 0 6px 12px var(--shadow-color);
+            overflow-y: auto;
+            max-height: 60vh;
         }
 
         .post-text {
             font-size: 18px;
-            line-height: 1.5;
         }
 
         .fact-id {
@@ -118,52 +116,17 @@
             border-radius: 50%;
             font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 4px 8px var(--shadow-color);
-        }
-
-        #add-post-form {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: var(--card-bg);
-            box-shadow: 0 4px 8px var(--shadow-color);
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            z-index: 1000;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        textarea {
-            padding: 10px;
-            border: 1px solid var(--accent-color);
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        button {
-            cursor: pointer;
         }
 
         @media (max-width: 600px) {
-            header {
-                font-size: 18px;
-            }
             #search-bar {
                 flex-direction: column;
                 gap: 10px;
-            }
-            #add-post-form {
-                width: 80%;
-                right: 10%;
             }
         }
     </style>
 </head>
 <body>
-
 <header>Welcome to Fact-Ory!</header>
 
 <div id="search-bar">
@@ -171,35 +134,47 @@
     <button id="search-btn">Search</button>
 </div>
 
-<div class="post-container">
-    <div class="post-text">This is a sample fact. Isn't it amazing?</div>
-    <div class="fact-id">Fact ID: 12345</div>
+<div id="post-container" class="post-container">
+    <div class="post-text">Loading facts...</div>
 </div>
 
 <button id="add-post-btn">+</button>
 
-<div id="add-post-form">
-    <textarea id="post-input" placeholder="Enter a new Fact..." rows="3"></textarea>
-    <button type="button" id="submit-post-btn">Add Fact</button>
-</div>
-
 <script>
-    // Toggle Add Post Form
-    const addPostBtn = document.getElementById('add-post-btn');
-    const addPostForm = document.getElementById('add-post-form');
-    addPostBtn.addEventListener('click', () => {
-        addPostForm.style.display = addPostForm.style.display === 'flex' ? 'none' : 'flex';
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "your-api-key",
+        authDomain: "your-app.firebaseapp.com",
+        databaseURL: "https://your-app.firebaseio.com",
+        projectId: "your-app-id",
+        storageBucket: "your-app.appspot.com",
+        messagingSenderId: "your-messaging-id",
+        appId: "your-app-id"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Fetch and Display Facts
+    const postContainer = document.getElementById('post-container');
+    database.ref('facts').on('value', (snapshot) => {
+        postContainer.innerHTML = '';
+        snapshot.forEach((fact) => {
+            const factElement = document.createElement('div');
+            factElement.className = 'post-text';
+            factElement.innerHTML = `<p>${fact.val().content}</p><small class="fact-id">ID: ${fact.key}</small>`;
+            postContainer.appendChild(factElement);
+        });
     });
 
-    // Dark Mode Toggle
-    const toggleTheme = () => {
-        document.body.setAttribute('data-theme',
-            document.body.getAttribute('data-theme') === 'dark' ? '' : 'dark');
-    };
-
-    // Listen for a keyboard shortcut to toggle themes
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'd') toggleTheme();
+    // Toggle Dark Mode
+    const toggleTheme = document.createElement('button');
+    toggleTheme.textContent = 'Toggle Dark Mode';
+    toggleTheme.style.position = 'fixed';
+    toggleTheme.style.bottom = '20px';
+    toggleTheme.style.left = '20px';
+    document.body.appendChild(toggleTheme);
+    toggleTheme.addEventListener('click', () => {
+        document.body.toggleAttribute('data-theme', 'dark');
     });
 </script>
 </body>
