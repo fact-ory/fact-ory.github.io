@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="google-site-verification" content="y5txw-rKCCJvQ0pLy9kGVP8-uxPs1tn7Qb0y_tFmpeo" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SERTCMFWNJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-SERTCMFWNJ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fact-Ory</title>
@@ -88,9 +98,8 @@
         }
 
         #post-container {
-            width: 80%;
-            max-width: 600px;
-            height: auto;
+            width: 350px;
+            height: 500px;
             background-color: white;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -99,48 +108,35 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            padding: 30px;
+            padding: 20px;
             transition: transform 0.4s ease-in-out;
-            margin-top: 20px;
-            font-size: 20px;
-            height: 300px; /* Larger box */
         }
 
         #post-text {
             width: 100%;
-            height: 100%;
-            font-size: 20px;
-            overflow: auto;
-            margin: 0;
-            padding: 10px;
+            height: calc(100% - 20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
             text-align: left;
+            font-size: 18px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
         }
 
         #fact-id {
             margin-top: 10px;
-            font-size: 16px;
+            font-size: 14px;
             color: #555;
-        }
-
-        #copy-fact-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 8px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        #copy-fact-btn:hover {
-            background-color: #218838;
         }
 
         #add-post-form {
             display: none;
             flex-direction: column;
             gap: 10px;
-            width: 300px;
+            width: 200px;
             position: fixed;
             bottom: 80px;
             right: 20px;
@@ -149,7 +145,6 @@
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            align-items: center;
         }
 
         #post-input {
@@ -159,7 +154,6 @@
             border: 1px solid #ccc;
             width: 100%;
             resize: none;
-            max-height: 100px;
         }
 
         #submit-post-btn {
@@ -170,11 +164,6 @@
             color: white;
             border: none;
             cursor: pointer;
-            width: 100%;
-        }
-
-        #submit-post-btn:hover {
-            background-color: #0056b3;
         }
 
         #add-post-btn {
@@ -211,13 +200,14 @@
 
         @media (max-width: 600px) {
             #post-container {
-                width: 90%;
-                padding: 15px;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
             }
 
             #add-post-form {
                 width: 80%;
-                bottom: 60px;
+                bottom: 80px;
                 right: 10%;
             }
 
@@ -235,14 +225,6 @@
                 padding: 6px;
                 font-size: 14px;
             }
-
-            #post-input {
-                font-size: 12px;
-            }
-
-            #submit-post-btn {
-                font-size: 12px;
-            }
         }
     </style>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -256,88 +238,21 @@
     <button id="search-btn">Search</button>
 </div>
 
-<div id="post-container">
-    <div id="post-text">
-        <!-- Fact content will be dynamically loaded here -->
+<div class="post-container" id="post-container">
+    <div class="post" id="post-text">
     </div>
     <div id="fact-id">
-        Fact ID: <span id="fact-id-number">12345</span>
-        <button id="copy-fact-btn" onclick="copyFact()">Copy Fact</button>
     </div>
 </div>
 
 <div id="add-post-form">
     <textarea id="post-input" placeholder="Enter a new Fact..." rows="3"></textarea>
-    <button type="button" id="submit-post-btn" onclick="addFact()">Add Fact</button>
+    <button type="button" id="submit-post-btn">Add Fact</button>
 </div>
 
-<button id="add-post-btn" onclick="toggleAddPostForm()">+</button>
+<button id="add-post-btn">+</button>
 
 <div id="notification"></div>
-
-<script>
-    // Firebase configuration (replace with your own credentials)
-    const firebaseConfig = {
-        apiKey: "your-api-key",
-        authDomain: "your-auth-domain",
-        databaseURL: "https://your-database-url.firebaseio.com",
-        projectId: "your-project-id",
-        storageBucket: "your-storage-bucket",
-        messagingSenderId: "your-sender-id",
-        appId: "your-app-id"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    // Function to copy fact to clipboard
-    function copyFact() {
-        const factText = document.getElementById('post-text').innerText;
-        navigator.clipboard.writeText(factText).then(() => {
-            alert("Fact copied!");
-        });
-    }
-
-    // Function to toggle the add post form visibility
-    function toggleAddPostForm() {
-        const form = document.getElementById('add-post-form');
-        form.style.display = form.style.display === 'none' || form.style.display === '' ? 'flex' : 'none';
-    }
-
-    // Function to fetch and display a random fact
-    function getFact() {
-        const factId = "12345"; // Example Fact ID, you can replace with dynamic logic.
-        const factRef = database.ref('facts/' + factId);
-        factRef.once('value', (snapshot) => {
-            const factData = snapshot.val();
-            const factText = factData.text;
-            const factID = factData.id;
-
-            document.getElementById('post-text').innerText = factText;
-            document.getElementById('fact-id-number').innerText = factID;
-        });
-    }
-
-    // Add a new fact
-    function addFact() {
-        const newFact = document.getElementById('post-input').value;
-        if (newFact.trim() !== "") {
-            const newFactId = Math.floor(Math.random() * 100000); // Generate random FactID
-            const newFactRef = database.ref('facts/' + newFactId);
-            newFactRef.set({
-                id: newFactId,
-                text: newFact
-            });
-
-            document.getElementById('post-input').value = ''; // Clear input
-            alert("Fact added successfully!");
-        }
-    }
-
-    // On page load, get a fact
-    window.onload = function() {
-        getFact();
-    };
-</script>
-
+<script src="main.js"></script>
 </body>
 </html>
