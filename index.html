@@ -309,7 +309,7 @@
         const factRef = database.ref('facts/' + factId);
         factRef.once('value', (snapshot) => {
             const factData = snapshot.val();
-            const factText = factData.message;
+            const factText = factData.text;
             const factID = factData.id;
 
             document.getElementById('post-text').innerText = factText;
@@ -325,7 +325,7 @@
             const newFactRef = database.ref('facts/' + newFactId);
             newFactRef.set({
                 id: newFactId,
-                message: newFact
+                text: newFact
             });
 
             document.getElementById('post-input').value = ''; // Clear input
