@@ -47,54 +47,50 @@
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f8f9fa;
+            background-color: #f0f0f0;
             overflow: hidden;
-            color: #333;
         }
 
         #search-bar {
             width: 100%;
             max-width: 600px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin-top: 20px;
-            padding: 0 15px;
         }
 
         #logo {
             width: 40px;
             height: 40px;
             border-radius: 50%;
+            margin-right: 10px;
             background-image: url('logo.png');
             background-size: cover;
-            background-position: center;
         }
 
         #search-input {
-            width: 75%;
-            padding: 10px;
+            width: 70%;
+            padding: 8px;
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
-            background-color: #fff;
         }
 
         #search-btn {
-            padding: 10px;
+            padding: 8px;
             font-size: 16px;
             border-radius: 5px;
             background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         #search-btn:hover {
@@ -102,35 +98,30 @@
         }
 
         #post-container {
-            width: 350px;
-            height: 500px;
+            width: 80%;
+            max-width: 600px;
+            height: auto;
             background-color: white;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             padding: 20px;
-            margin-top: 20px;
             transition: transform 0.4s ease-in-out;
-            background-color: #fff;
+            margin-top: 20px;
         }
 
         #post-text {
             width: 100%;
-            height: calc(100% - 20px);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            text-align: left;
+            height: auto;
             font-size: 18px;
             overflow: hidden;
             margin: 0;
-            padding: 0;
-            color: #333;
+            padding: 10px;
+            text-align: left;
         }
 
         #fact-id {
@@ -139,44 +130,59 @@
             color: #555;
         }
 
+        #copy-fact-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #copy-fact-btn:hover {
+            background-color: #218838;
+        }
+
         #add-post-form {
             display: none;
             flex-direction: column;
-            gap: 15px;
-            width: 250px;
+            gap: 10px;
+            width: 300px;
             position: fixed;
             bottom: 80px;
             right: 20px;
             z-index: 1000;
-            background: #fff;
-            padding: 20px;
+            background: white;
+            padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            align-items: center;
         }
 
         #post-input {
-            padding: 10px;
+            padding: 8px;
             font-size: 14px;
             border-radius: 5px;
             border: 1px solid #ccc;
             width: 100%;
             resize: none;
-            height: 100px;
+            max-height: 100px;
         }
 
         #submit-post-btn {
-            padding: 10px;
+            padding: 8px;
             font-size: 14px;
             border-radius: 5px;
-            background-color: #28a745;
+            background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
+            width: 100%;
         }
 
         #submit-post-btn:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
 
         #add-post-btn {
@@ -206,27 +212,20 @@
             transform: translateX(-50%);
             background: #007bff;
             color: white;
-            padding: 12px;
+            padding: 10px;
             border-radius: 5px;
             display: none;
-            font-size: 16px;
         }
 
         @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-
             #post-container {
-                width: 100%;
-                height: auto;
-                max-height: 400px;
-                border-radius: 10px;
+                width: 90%;
+                padding: 15px;
             }
 
             #add-post-form {
-                width: 90%;
-                bottom: 20px;
+                width: 80%;
+                bottom: 60px;
                 right: 10%;
             }
 
@@ -237,21 +236,20 @@
 
             #search-input {
                 width: 65%;
-                padding: 8px;
+                padding: 6px;
             }
 
             #search-btn {
-                padding: 8px;
+                padding: 6px;
                 font-size: 14px;
             }
 
-            #submit-post-btn {
-                padding: 10px;
-                font-size: 16px;
+            #post-input {
+                font-size: 12px;
             }
 
-            #notification {
-                bottom: 10px;
+            #submit-post-btn {
+                font-size: 12px;
             }
         }
     </style>
@@ -268,8 +266,11 @@
 
 <div class="post-container" id="post-container">
     <div class="post" id="post-text">
+        <!-- Fact content goes here -->
     </div>
     <div id="fact-id">
+        Fact ID: <span id="fact-id-number">123456</span>
+        <button id="copy-fact-btn" onclick="copyFact()">Copy Fact</button>
     </div>
 </div>
 
@@ -278,9 +279,24 @@
     <button type="button" id="submit-post-btn">Add Fact</button>
 </div>
 
-<button id="add-post-btn">+</button>
+<button id="add-post-btn" onclick="toggleAddPostForm()">+</button>
 
 <div id="notification"></div>
-<script src="main.js"></script>
+
+<script>
+    // JavaScript for copying fact to clipboard
+    function copyFact() {
+        const factText = document.getElementById('post-text').innerText;
+        navigator.clipboard.writeText(factText).then(() => {
+            alert("Fact copied!");
+        });
+    }
+
+    function toggleAddPostForm() {
+        const form = document.getElementById('add-post-form');
+        form.style.display = form.style.display === 'none' || form.style.display === '' ? 'flex' : 'none';
+    }
+</script>
+
 </body>
 </html>
