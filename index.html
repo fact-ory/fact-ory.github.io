@@ -25,39 +25,64 @@
             --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .animate-next-out {
-            opacity: 0;
-            transform: translateX(-100%);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        .slide-in-right {
+            animation: slide-in-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .animate-prev-out {
-            opacity: 0;
-            transform: translateX(100%);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        .slide-in-left {
+            animation: slide-in-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .animate-next-in {
-            opacity: 1;
-            transform: translateX(0);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        .slide-out-right {
+            animation: slide-out-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .animate-prev-in {
-            opacity: 1;
-            transform: translateX(0);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        .slide-out-left {
+            animation: slide-out-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Add initial state classes */
-        .initial-next {
-            transform: translateX(100%);
-            opacity: 0;
+        @keyframes slide-in-right {
+            from {
+                transform: translateX(100%) rotate(5deg);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) rotate(0);
+                opacity: 1;
+            }
         }
 
-        .initial-prev {
-            transform: translateX(-100%);
-            opacity: 0;
+        @keyframes slide-in-left {
+            from {
+                transform: translateX(-100%) rotate(-5deg);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-out-right {
+            from {
+                transform: translateX(0) rotate(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%) rotate(5deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slide-out-left {
+            from {
+                transform: translateX(0) rotate(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-100%) rotate(-5deg);
+                opacity: 0;
+            }
         }
 
         body {
@@ -126,7 +151,7 @@
 
         .post-container {
             width: 350px;
-            min-height: 500px;
+            min-height: 500px;  /* Increased from 400px to make it more rectangular */
             background-color: white;
             border-radius: 20px;
             box-shadow: var(--card-shadow);
@@ -136,9 +161,9 @@
             transition: transform 0.3s ease;
             perspective: 1000px;
             transform-style: preserve-3d;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            display: flex;           /* Added */
+            flex-direction: column;  /* Added */
+            justify-content: space-between; /* Added */
             opacity: 1;
             transform: translateX(0);
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -149,22 +174,22 @@
             line-height: 1.6;
             color: var(--text-color);
             margin-bottom: 20px;
-            flex-grow: 1;
+            flex-grow: 1;  /* Added to allow post to take available space */
         }
 
         #fact-id {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 10px 15px;
+            justify-content: space-between;  /* Changed from gap: 10px */
+            padding: 10px 15px;             /* Adjusted padding */
             background-color: var(--main-color-light);
             border-radius: 12px;
             font-size: 14px;
             color: var(--text-color);
-            margin-top: auto;
-            width: calc(100% - 30px);
-            position: relative;
-            bottom: 0;
+            margin-top: auto;  /* Changed from margin-top: 20px */
+            width: calc(100% - 30px);  /* Added to ensure proper width */
+            position: relative;        /* Added */
+            bottom: 0;                /* Added */
         }
 
         #copy-fact-id {
@@ -304,6 +329,42 @@
                 width: 35px;
                 height: 35px;
             }
+        }
+
+        /* New animation classes */
+        .animate-next-out {
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .animate-prev-out {
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .animate-next-in {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .animate-prev-in {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Initial state classes */
+        .initial-next {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .initial-prev {
+            transform: translateX(-100%);
+            opacity: 0;
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>

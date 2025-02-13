@@ -92,35 +92,42 @@ document.addEventListener('DOMContentLoaded', function () {
             factIdTextElement.textContent = "";
             return;
         }
-    
+
         if (index < 0 || index >= facts.length) {
             postTextElement.textContent = "Invalid fact index.";
             factIdTextElement.textContent = "";
             return;
         }
-    
+
         isAnimating = true;
-    
+
+        // Remove any existing animation classes
         postContainerElement.className = 'post-container';
-    
+
+        // Add the appropriate "out" animation class
         postContainerElement.classList.add(direction === 'next' ? 'animate-next-out' : 'animate-prev-out');
-    
+
         await new Promise(resolve => setTimeout(resolve, 300));
-    
+
+        // Update content
         postTextElement.textContent = facts[index].text;
         factIdTextElement.textContent = `FactID: ${facts[index].id}`;
-    
+
+        // Set initial position for the new content
         postContainerElement.className = 'post-container';
         postContainerElement.classList.add(direction === 'next' ? 'initial-next' : 'initial-prev');
-    
+
+        // Force a reflow
         void postContainerElement.offsetWidth;
-    
+
+        // Add the appropriate "in" animation class
         postContainerElement.classList.add(direction === 'next' ? 'animate-next-in' : 'animate-prev-in');
-    
+
         await new Promise(resolve => setTimeout(resolve, 300));
-    
+
+        // Clean up classes
         postContainerElement.className = 'post-container';
-    
+
         isAnimating = false;
         currentIndex = index;
     }
@@ -161,6 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showFact(newIndex, direction);
     }
 
+    // Keyboard navigation
     document.addEventListener('keydown', function (event) {
         if (event.key === 'ArrowRight') {
             navigate('next');
@@ -169,6 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Touch and mouse swipe handling
     let startX, endX;
     let isSwiping = false;
 
@@ -177,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
         startX = touch.pageX;
         isSwiping = true;
         
+        // Reset transform on touch start
         postContainerElement.style.transform = 'translateX(0)';
     }
 
@@ -187,11 +197,14 @@ document.addEventListener('DOMContentLoaded', function () {
         endX = touch.pageX;
         const diff = endX - startX;
 
+        // Add some resistance to the swipe
         const resistance = 0.4;
         const transform = Math.min(Math.max(diff * resistance, -100), 100);
         
+        // Apply real-time transform during swipe
         postContainerElement.style.transform = `translateX(${transform}px)`;
 
+        // Prevent default scrolling when swiping
         if (Math.abs(diff) > 5) {
             e.preventDefault();
         }
@@ -203,6 +216,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const swipeThreshold = 50;
         const diff = endX - startX;
 
+        // Reset transform
         postContainerElement.style.transform = '';
 
         if (Math.abs(diff) > swipeThreshold) {
@@ -218,20 +232,24 @@ document.addEventListener('DOMContentLoaded', function () {
         endX = undefined;
     }
 
+    // Add touch event listeners
     postContainerElement.addEventListener('touchstart', handleTouchStart, { passive: false });
     postContainerElement.addEventListener('touchmove', handleTouchMove, { passive: false });
     postContainerElement.addEventListener('touchend', handleTouchEnd);
 
+    // Add mouse event listeners
     postContainerElement.addEventListener('mousedown', handleTouchStart);
     postContainerElement.addEventListener('mousemove', handleTouchMove);
     document.addEventListener('mouseup', handleTouchEnd);
 
+    // Prevent text selection during swipe
     postContainerElement.addEventListener('selectstart', (e) => {
         if (isSwiping) {
             e.preventDefault();
         }
     });
 
+    // Handle form submission with Enter key
     postInputElement.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -239,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Close add post form when clicking outside
     document.addEventListener('click', function(e) {
         if (!addPostForm.contains(e.target) && !addPostButton.contains(e.target)) {
             if (addPostForm.style.display === 'flex') {
@@ -247,12 +266,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Handle search with Enter key
     searchInputElement.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             searchButton.click();
         }
     });
 
-    postContainerElement.classList.add('slide-in');
+    // Initial load animation
+    postContainerElement.classList.add('slide-in-right');
 });
-        
