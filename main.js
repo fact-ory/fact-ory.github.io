@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentIndex = 0;
     let isAnimating = false;
 
+    window.facts = facts;
+    window.showFact = showFact;
+
+
     const firebaseConfig = {
         apiKey: "AIzaSyA3Cgkok7Wft6IcP7r1yMCxojMTSLmU",
         authDomain: "fact-ory-test1.firebaseapp.com",
