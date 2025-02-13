@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <script>
-        function getFactIdFromUrl() {
-            const path = window.location.pathname;
-            const match = path.match(/\/fact\/([A-Z0-9]+)/i);
-            return match ? match[1].toUpperCase() : null;
-        }
+        (function(){
+            let redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+            if (redirect && redirect != location.href) {
+                history.replaceState(null, null, redirect);
+            }
+        })();
     </script>
     <meta name="google-site-verification" content="y5txw-rKCCJvQ0pLy9kGVP8-uxPs1tn7Qb0y_tFmpeo" />
     <!-- Google tag (gtag.js) -->
