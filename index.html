@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        function getFactIdFromUrl() {
+            const path = window.location.pathname;
+            const match = path.match(/\/fact\/([A-Z0-9]+)/i);
+            return match ? match[1].toUpperCase() : null;
+        }
+    </script>
     <meta name="google-site-verification" content="y5txw-rKCCJvQ0pLy9kGVP8-uxPs1tn7Qb0y_tFmpeo" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SERTCMFWNJ"></script>
@@ -151,7 +158,7 @@
 
         .post-container {
             width: 350px;
-            min-height: 500px;  /* Increased from 400px to make it more rectangular */
+            min-height: 500px;
             background-color: white;
             border-radius: 20px;
             box-shadow: var(--card-shadow);
@@ -161,9 +168,9 @@
             transition: transform 0.3s ease;
             perspective: 1000px;
             transform-style: preserve-3d;
-            display: flex;           /* Added */
-            flex-direction: column;  /* Added */
-            justify-content: space-between; /* Added */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             opacity: 1;
             transform: translateX(0);
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -174,22 +181,22 @@
             line-height: 1.6;
             color: var(--text-color);
             margin-bottom: 20px;
-            flex-grow: 1;  /* Added to allow post to take available space */
+            flex-grow: 1;
         }
 
         #fact-id {
             display: flex;
             align-items: center;
-            justify-content: space-between;  /* Changed from gap: 10px */
-            padding: 10px 15px;             /* Adjusted padding */
+            justify-content: space-between;
             background-color: var(--main-color-light);
             border-radius: 12px;
             font-size: 14px;
             color: var(--text-color);
-            margin-top: auto;  /* Changed from margin-top: 20px */
-            width: calc(100% - 30px);  /* Added to ensure proper width */
-            position: relative;        /* Added */
-            bottom: 0;                /* Added */
+            margin-top: auto;
+            width: calc(100% - 30px);
+            padding: 10px 15px;
+            position: relative;
+            bottom: 0;
         }
 
         #copy-fact-id {
@@ -331,7 +338,6 @@
             }
         }
 
-        /* New animation classes */
         .animate-next-out {
             opacity: 0;
             transform: translateX(-100%);
@@ -356,7 +362,6 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        /* Initial state classes */
         .initial-next {
             transform: translateX(100%);
             opacity: 0;
@@ -395,5 +400,6 @@
 
 <div id="notification"></div>
 <script src="main.js"></script>
+<script src="router.js"></script>
 </body>
 </html>
