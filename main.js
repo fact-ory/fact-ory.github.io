@@ -1,22 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    function getFactIdFromUrl() {
-    const path = window.location.pathname;
-    const match = path.match(/\/fact\/([A-Z0-9]+)/i);
-    return match ? match[1].toUpperCase() : null;
-    }
-    const urlFactId = getFactIdFromUrl();
-    if (urlFactId) {
-        const checkFactsAndShow = setInterval(() => {
-            if (facts.length > 0) {
-                const foundIndex = facts.findIndex(f => f.id === urlFactId);
-                if (foundIndex !== -1) {
-                    showFact(foundIndex);
-                }
-                clearInterval(checkFactsAndShow);
-            }
-        }, 100);
-    }
-    
     const postContainerElement = document.getElementById('post-container');
     const postTextElement = document.getElementById('post-text');
     const factIdElement = document.getElementById('fact-id');
@@ -33,10 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let facts = [];
     let currentIndex = 0;
     let isAnimating = false;
-
-    window.facts = facts;
-    window.showFact = showFact;
-
 
     const firebaseConfig = {
         apiKey: "AIzaSyA3Cgkok7Wft6IcP7r1yMCxojMTSLmU",
