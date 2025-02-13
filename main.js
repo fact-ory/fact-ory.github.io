@@ -127,7 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         isAnimating = false;
         currentIndex = index;
-        if (window.factRouter) window.factRouter.updateUrl(facts[index].id);
     }
 
     function loadFacts() {
