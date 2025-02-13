@@ -16,45 +16,85 @@
     <title>Fact-Ory</title>
     <link rel="icon" href="logo.png" type="image/png">
     <style>
-        .slide-in {
-            animation: slide-in 0.4s ease-in-out;
+        :root {
+            --main-color: #FFD700;
+            --main-color-dark: #FFC000;
+            --main-color-light: #FFE44D;
+            --background-color: #FFF9E6;
+            --text-color: #333;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .slide-out {
-            animation: slide-out 0.4s ease-in-out;
+        .slide-in-right {
+            animation: slide-in-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        @keyframes slide-in {
+        .slide-in-left {
+            animation: slide-in-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-out-right {
+            animation: slide-out-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-out-left {
+            animation: slide-out-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slide-in-right {
             from {
-                transform: translateX(100%);
+                transform: translateX(100%) rotate(5deg);
                 opacity: 0;
             }
             to {
-                transform: translateX(0);
+                transform: translateX(0) rotate(0);
                 opacity: 1;
             }
         }
 
-        @keyframes slide-out {
+        @keyframes slide-in-left {
             from {
-                transform: translateX(0);
+                transform: translateX(-100%) rotate(-5deg);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) rotate(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-out-right {
+            from {
+                transform: translateX(0) rotate(0);
                 opacity: 1;
             }
             to {
-                transform: translateX(-100%);
+                transform: translateX(100%) rotate(5deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slide-out-left {
+            from {
+                transform: translateX(0) rotate(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-100%) rotate(-5deg);
                 opacity: 0;
             }
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
-            overflow: hidden;
+            background-color: var(--background-color);
+            overflow-x: hidden;
+            padding: 20px;
         }
 
         #search-bar {
@@ -63,127 +103,164 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            margin: 20px 0;
+            gap: 10px;
         }
 
         #logo {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            margin-right: 10px;
             background-image: url('logo.png');
             background-size: cover;
+            box-shadow: var(--card-shadow);
         }
 
         #search-input {
-            width: 70%;
-            padding: 8px;
+            flex-grow: 1;
+            padding: 12px;
             font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            border-radius: 25px;
+            border: 2px solid var(--main-color);
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--main-color-dark);
+            box-shadow: 0 0 0 3px var(--main-color-light);
         }
 
         #search-btn {
-            padding: 8px;
+            padding: 12px 24px;
             font-size: 16px;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
+            border-radius: 25px;
+            background-color: var(--main-color);
+            color: var(--text-color);
             border: none;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
 
         #search-btn:hover {
-            background-color: #0056b3;
+            background-color: var(--main-color-dark);
+            transform: translateY(-2px);
         }
 
-        #post-container {
+        .post-container {
             width: 350px;
-            height: 500px;
+            min-height: 500px;
             background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
             position: relative;
+            padding: 25px;
+            margin: 20px;
+            transition: transform 0.3s ease;
+            perspective: 1000px;
+            transform-style: preserve-3d;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            padding: 20px;
-            transition: transform 0.4s ease-in-out;
+            justify-content: space-between;
         }
 
-        #post-text {
-            width: 100%;
-            height: calc(100% - 20px);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            text-align: left;
+        .post {
             font-size: 18px;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            flex-grow: 1;
         }
 
         #fact-id {
-            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: var(--main-color-light);
+            border-radius: 12px;
             font-size: 14px;
-            color: #555;
+            color: var(--text-color);
+            margin-top: auto;
+            width: calc(100% - 30px);
+            position: relative;
+            bottom: 0;
+        }
+
+        #copy-fact-id {
+            padding: 8px 16px;
+            background-color: var(--main-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #copy-fact-id:hover {
+            background-color: var(--main-color-dark);
+            transform: translateY(-2px);
         }
 
         #add-post-form {
             display: none;
-            flex-direction: column;
-            gap: 10px;
-            width: 200px;
             position: fixed;
             bottom: 80px;
             right: 20px;
-            z-index: 1000;
             background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            width: 300px;
+            z-index: 1000;
         }
 
         #post-input {
-            padding: 8px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
             width: 100%;
-            resize: none;
+            padding: 12px;
+            border: 2px solid var(--main-color);
+            border-radius: 12px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 10px;
         }
 
         #submit-post-btn {
-            padding: 8px;
-            font-size: 14px;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--main-color);
+            color: var(--text-color);
             border: none;
+            border-radius: 12px;
             cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
 
         #add-post-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #007bff;
-            color: white;
+            width: 60px;
+            height: 60px;
+            background-color: var(--main-color);
+            color: var(--text-color);
             border: none;
-            padding: 20px;
             border-radius: 50%;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #add-post-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(180deg);
+            background-color: var(--main-color-dark);
         }
 
         #notification {
@@ -191,44 +268,68 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #007bff;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
+            background: var(--main-color);
+            color: var(--text-color);
+            padding: 15px 25px;
+            border-radius: 12px;
             display: none;
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            animation: notification-slide-up 0.3s ease;
+        }
+
+        @keyframes notification-slide-up {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
         }
 
         @media (max-width: 600px) {
-            #post-container {
-                width: 100%;
-                height: 100%;
-                border-radius: 0;
+            body {
+                padding: 10px;
             }
 
-            #add-post-form {
-                width: 80%;
-                bottom: 80px;
-                right: 10%;
+            .post-container {
+                width: calc(100% - 40px);
+                margin: 10px;
+                padding: 20px;
             }
 
-            #logo {
-                width: 30px;
-                height: 30px;
+            #search-bar {
+                flex-wrap: wrap;
+                padding: 0 10px;
             }
 
             #search-input {
-                width: 65%;
-                padding: 6px;
+                width: calc(100% - 60px);
             }
 
-            #search-btn {
-                padding: 6px;
-                font-size: 14px;
+            #add-post-form {
+                width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+            }
+
+            #notification {
+                width: calc(100% - 40px);
+                left: 20px;
+                right: 20px;
+                transform: none;
+            }
+
+            #logo {
+                width: 35px;
+                height: 35px;
             }
         }
     </style>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
 
@@ -239,15 +340,16 @@
 </div>
 
 <div class="post-container" id="post-container">
-    <div class="post" id="post-text">
-    </div>
+    <div class="post" id="post-text"></div>
     <div id="fact-id">
+        <span id="fact-id-text"></span>
+        <button id="copy-fact-id">Copy ID</button>
     </div>
 </div>
 
 <div id="add-post-form">
-    <textarea id="post-input" placeholder="Enter a new Fact..." rows="3"></textarea>
-    <button type="button" id="submit-post-btn">Add Fact</button>
+    <textarea id="post-input" placeholder="Share a new fact..."></textarea>
+    <button type="button" id="submit-post-btn">Share Fact</button>
 </div>
 
 <button id="add-post-btn">+</button>
