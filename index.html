@@ -25,64 +25,39 @@
             --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .slide-in-right {
-            animation: slide-in-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .animate-next-out {
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .slide-in-left {
-            animation: slide-in-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .animate-prev-out {
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .slide-out-right {
-            animation: slide-out-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .animate-next-in {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .slide-out-left {
-            animation: slide-out-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .animate-prev-in {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        @keyframes slide-in-right {
-            from {
-                transform: translateX(100%) rotate(5deg);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0) rotate(0);
-                opacity: 1;
-            }
+        /* Add initial state classes */
+        .initial-next {
+            transform: translateX(100%);
+            opacity: 0;
         }
 
-        @keyframes slide-in-left {
-            from {
-                transform: translateX(-100%) rotate(-5deg);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0) rotate(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes slide-out-right {
-            from {
-                transform: translateX(0) rotate(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%) rotate(5deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes slide-out-left {
-            from {
-                transform: translateX(0) rotate(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(-100%) rotate(-5deg);
-                opacity: 0;
-            }
+        .initial-prev {
+            transform: translateX(-100%);
+            opacity: 0;
         }
 
         body {
@@ -164,6 +139,9 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         .post {

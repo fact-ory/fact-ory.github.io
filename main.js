@@ -101,19 +101,25 @@ document.addEventListener('DOMContentLoaded', function () {
     
         isAnimating = true;
     
-        postContainerElement.classList.remove('slide-in-right', 'slide-in-left', 'slide-out-right', 'slide-out-left');
+        postContainerElement.className = 'post-container';
     
-        postContainerElement.classList.add(direction === 'next' ? 'slide-out-left' : 'slide-out-right');
+        postContainerElement.classList.add(direction === 'next' ? 'animate-next-out' : 'animate-prev-out');
     
-        await new Promise(resolve => setTimeout(resolve, 250));
+        await new Promise(resolve => setTimeout(resolve, 300));
     
         postTextElement.textContent = facts[index].text;
         factIdTextElement.textContent = `FactID: ${facts[index].id}`;
     
-        postContainerElement.classList.remove(direction === 'next' ? 'slide-out-left' : 'slide-out-right');
-        postContainerElement.classList.add(direction === 'next' ? 'slide-in-right' : 'slide-in-left');
+        postContainerElement.className = 'post-container';
+        postContainerElement.classList.add(direction === 'next' ? 'initial-next' : 'initial-prev');
     
-        await new Promise(resolve => setTimeout(resolve, 250));
+        void postContainerElement.offsetWidth;
+    
+        postContainerElement.classList.add(direction === 'next' ? 'animate-next-in' : 'animate-prev-in');
+    
+        await new Promise(resolve => setTimeout(resolve, 300));
+    
+        postContainerElement.className = 'post-container';
     
         isAnimating = false;
         currentIndex = index;
