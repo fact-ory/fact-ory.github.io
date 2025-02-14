@@ -364,34 +364,85 @@
             transform: translateX(-100%);
             opacity: 0;
         }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: var(--card-shadow);
+            border-radius: 8px;
+            padding: 10px;
+            z-index: 1000;
+            top: 50px;
+            left: 0;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--main-color-light);
+        }
+
+        .ai-response-card {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 20px;
+            display: none;
+        }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
 
-<div id="search-bar">
-    <div id="logo"></div>
-    <input type="text" id="search-input" placeholder="Search by FactID">
-    <button id="search-btn">Search</button>
-</div>
-
-<div class="post-container" id="post-container">
-    <div class="post" id="post-text"></div>
-    <div id="fact-id">
-        <span id="fact-id-text"></span>
-        <button id="copy-fact-id">Copy ID</button>
+    <div id="search-bar">
+        <div class="dropdown">
+            <div id="logo" onclick="toggleDropdown()"></div>
+            <div class="dropdown-content" id="dropdown-content">
+                <a href="#" onclick="askFactAI()">Ask FactAI</a>
+            </div>
+        </div>
+        <input type="text" id="search-input" placeholder="Search by FactID">
+        <button id="search-btn">Search</button>
     </div>
-</div>
-
-<div id="add-post-form">
-    <textarea id="post-input" placeholder="Share a new fact..."></textarea>
-    <button type="button" id="submit-post-btn">Share Fact</button>
-</div>
-
-<button id="add-post-btn">+</button>
-
-<div id="notification"></div>
-<script src="main.js"></script>
+    
+    <div class="post-container" id="post-container">
+        <div class="post" id="post-text"></div>
+        <div id="fact-id">
+            <span id="fact-id-text"></span>
+            <button id="copy-fact-id">Copy ID</button>
+        </div>
+    </div>
+    
+    <div class="ai-response-card" id="ai-response-card">
+        <div class="post" id="ai-response-text"></div>
+    </div>
+    
+    <div id="add-post-form">
+        <textarea id="post-input" placeholder="Share a new fact..."></textarea>
+        <button type="button" id="submit-post-btn">Share Fact</button>
+    </div>
+    
+    <button id="add-post-btn">+</button>
+    
+    <div id="notification"></div>
+    <script src="main.js"></script>
+    <script src="gemini.js"></script>
+    <div id="notification"></div>
+    <script src="main.js"></script>
 </body>
 </html>
